@@ -9,6 +9,11 @@ use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
+    public function test()
+    {
+        echo "Test";
+    }
+
     // 验证登陆信息
     public function index()
     {
@@ -61,7 +66,6 @@ class UserController extends Controller
 
         $url = request()->root().'/oauth/token';
         $param = array_merge(config('passport.proxy'), $input);
-        print_r($param);die;
         $response = $http->request('POST', $url, ['form_params'=>$param]);
         return json_decode((string) $response->getBody(), true);
     }
