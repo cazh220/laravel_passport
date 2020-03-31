@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
- use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
@@ -31,7 +32,7 @@ class UserController extends Controller
         }
     }
 
-    // 登录并生成token
+    // 登录并生成token;简易的token生成方式
     public function login(Request $request)
     {
         $username = $request->input('username', '');
@@ -48,6 +49,21 @@ class UserController extends Controller
         {
             return response(['code' => 401, 'msg' => '登录失败']);
         }
+    }
+
+    // 生成oauth2.0 token与refresh_token
+    public function login2(Request $request)
+    {
+        $username = $request->input('username', '');
+        $password = $request->input('password', '');
+        $input = ['username'=> $username,'password'=>$password];
+        $http = new Client();
+
+        $url = request()->root().'/oauth/token';
+        $param = array_merge(config('passport.proxy'), $input);
+        print_r($param);die;
+        $response = $http->request('POST', $url, ['form_params'=>$param]);
+        return json_decode((string) $response->getBody(), true);
     }
 
 
