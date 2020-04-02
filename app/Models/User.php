@@ -30,5 +30,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    // 修改passport认证字段
+    public function findForPassport($field = '')
+    {
+        return $this->orWhere('username', $field)->orWhere('email', $field)->first();
+    }
+
 
 }
