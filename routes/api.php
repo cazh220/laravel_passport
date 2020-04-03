@@ -25,3 +25,4 @@ Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@login');
 Route::post('login2', 'UserController@login2');
 Route::get('test', 'UserController@test');
+Route::get('test2', 'UserController@test2');

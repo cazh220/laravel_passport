@@ -14,6 +14,16 @@ class UserController extends Controller
         echo "Test";
     }
 
+    public function test2()
+    {
+        $http = new Client();
+        $url = request()->root().'/oauth/token';
+        $param = array_merge(config('passport.proxy'), ['username'=>'admin', 'password'=>111111]);
+        $response = $http->request('POST', $url, ['form_params'=>$param]);
+
+        return json_decode((string) $response->getBody(), true);
+    }
+
     // 验证登陆信息
     public function index()
     {
