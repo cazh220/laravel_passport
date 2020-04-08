@@ -6,6 +6,7 @@ use App\Foundation\Repository\AdminUserPassportRepository;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use Laravel\Passport\PassportServiceProvider as BasePassportServiceProvider;
 use Laravel\Passport\Passport;
+use Illuminate\Support\Facades\Log;
 
 class PasspordAdminServiceProvider extends BasePassportServiceProvider
 {
@@ -21,9 +22,9 @@ class PasspordAdminServiceProvider extends BasePassportServiceProvider
             $this->app->make(AdminUserPassportRepository::class),
             $this->app->make(\Laravel\Passport\Bridge\RefreshTokenRepository::class)
         );
-
+        Log::info(__FUNCTION__);
         $grant->setRefreshTokenTTL(Passport::refreshTokensExpireIn());
-
+        Log::info($grant);
         return $grant;
     }
 

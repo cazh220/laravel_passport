@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;//新增
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
@@ -33,6 +34,7 @@ class User extends Authenticatable
     // 修改passport认证字段
     public function findForPassport($field = '')
     {
+        Log::info(__CLASS__.':'.__FUNCTION__.":".$field);
         return $this->orWhere('username', $field)->orWhere('email', $field)->first();
     }
 

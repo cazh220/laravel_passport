@@ -32,11 +32,11 @@ class AdminController extends Controller
     	$username = $request->input('name', '');
         $password = $request->input('password', '');
         $input = ['name'=> $username,'password'=>$password];
+        $input['guard'] = 'admin_api';
         $http = new Client();
-
         $url = request()->root().'/oauth/token';
         $param = array_merge(config('passport.proxy'), $input);
-        $param['guard'] = 'admin_api';
+        
         $response = $http->request('POST', $url, ['form_params'=>$param]);
         return json_decode((string) $response->getBody(), true);
     }

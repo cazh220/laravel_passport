@@ -8,6 +8,7 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Laravel\Passport\Bridge\UserRepository;
 use Laravel\Passport\Bridge\User;
 use RuntimeException;
+use Illuminate\Support\Facades\Log;
 
 class AdminUserPassportRepository extends UserRepository
 {
@@ -19,7 +20,7 @@ class AdminUserPassportRepository extends UserRepository
         if (is_null($model = config("auth.providers.{$provider}.model"))) {
             throw new RuntimeException('Unable to determine user model from configuration.');
         }
-
+        Log::info('guard:'.$guard.';model:'.$model);
         if (method_exists($model, 'findForPassport')) {
             $user = (new $model)->findForPassport($username);
         } else {
@@ -35,7 +36,7 @@ class AdminUserPassportRepository extends UserRepository
         } elseif (!$this->hasher->check($password, $user->password)) {
             return;
         }
-
+        Log::info('id:'.$user->getAuthIdentifier());
         return new User($user->getAuthIdentifier());
     }
 }
