@@ -15,6 +15,7 @@ class Admins extends Authenticatable
 
     const CREATED_AT = 'created_time';
     const UPDATED_AT = 'updated_time';
+    const $primaryKey = 'admin_id';
 
     /**
      * The attributes that are mass assignable.

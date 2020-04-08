@@ -31,7 +31,7 @@ class AdminController extends Controller
     {
     	$username = $request->input('username', '');
         $password = $request->input('password', '');
-        $input = ['name'=> $username,'password'=>$password];
+        $input = ['username'=> $username,'password'=>$password];
         $input['guard'] = 'admin_api';
         $http = new Client();
         $url = request()->root().'/oauth/token';
