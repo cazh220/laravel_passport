@@ -29,7 +29,7 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-    	$username = $request->input('name', '');
+    	$username = $request->input('username', '');
         $password = $request->input('password', '');
         $input = ['name'=> $username,'password'=>$password];
         $input['guard'] = 'admin_api';
