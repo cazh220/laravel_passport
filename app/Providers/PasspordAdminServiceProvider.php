@@ -24,7 +24,6 @@ class PasspordAdminServiceProvider extends BasePassportServiceProvider
         );
         Log::info(__FUNCTION__);
         $grant->setRefreshTokenTTL(Passport::refreshTokensExpireIn());
-        Log::info($grant);
         return $grant;
     }
 
