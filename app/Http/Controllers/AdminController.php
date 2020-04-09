@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * 后台登录
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -41,11 +43,20 @@ class AdminController extends Controller
         return json_decode((string) $response->getBody(), true);
     }
 
-
+    //验证用户信息
     public function index()
     {
     	if (\Auth::guard('admin_api')) {
             return response(['code' => 200, 'msg' => 'ok', 'data'=>\Auth::guard('admin_api')->user()]);
         }
+    }
+
+    public function logout()
+    {
+        if (\Auth::guard('admin_api')->check()) {
+            \Auth::guard('admin_api')->user()->token()->delete();
+        }
+
+        return response(['code' => 200, 'msg' => '退出登陆']);
     }
 }

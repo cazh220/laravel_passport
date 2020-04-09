@@ -29,6 +29,7 @@ Route::get('test2', 'UserController@test2');
 
 Route::middleware(['auth:admin_api'])->group(function () {
 	Route::get('_index', 'AdminController@index');
+	Route::get('_logout', 'AdminController@logout');
 });
 Route::post('_register', 'AdminController@register');
 Route::post('_login', 'AdminController@login');
