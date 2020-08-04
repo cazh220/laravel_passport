@@ -34,3 +34,20 @@ Route::middleware(['auth:admin_api'])->group(function () {
 Route::post('_register', 'AdminController@register');
 Route::post('_login', 'AdminController@login');
 Route::get('_test', 'AdminController@test');
+
+
+Route::post('file', 'NewsController@list');
+
+//文件、图片管理
+Route::post('picture', 'FileController@uploadPic');//上传
+Route::get('files', 'FileController@allFiles');//查看所有文件
+Route::delete('files', 'FileController@deleteFiles');//删除文件
+
+//省市区三级联动
+Route::get('provinces', 'AreaController@listProvinces');
+Route::get('subareas', 'AreaController@listChildAreas');
+Route::get('areas', 'AreaController@listAreas');
+
+
+//测试用
+Route::get('test/country', 'TestController@getCountry');

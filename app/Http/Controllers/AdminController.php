@@ -51,6 +51,7 @@ class AdminController extends Controller
         }
     }
 
+    //注销登录时删除token以免产生垃圾信息变大
     public function logout()
     {
         if (\Auth::guard('admin_api')->check()) {

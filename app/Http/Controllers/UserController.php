@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
+use Validator;
+use App\Http\Requests\Register;
 
 class UserController extends Controller
 {
@@ -35,9 +37,37 @@ class UserController extends Controller
     }
 
     // 注册
-    public function register(Request $request)
+    public function register(Register $request)
     {
     	$input = $request->all();
+        $user_input = array(
+            'username'      => !empty($input['username']) ? trim($input['username']) : '',
+            'name'          => !empty($input['name']) ? trim($input['name']) : '',
+            'password'      => !empty($input['password']) ? trim($input['password']) : '',
+            'c_password'    => !empty($input['c_password']) ? trim($input['c_password']) : '',
+            'email'         => !empty($input['email']) ? trim($input['email']) : '',
+            'sex'           => !empty($input['sex']) ? intval($input['sex']) : 0,
+            'province'      => !empty($input['province']) ? intval($input['province']) : 0,
+            'city'          => !empty($input['city']) ? intval($input['city']) : 0,
+            'district'      => !empty($input['district']) ? intval($input['district']) : 0,
+            'address'       => !empty($input['address']) ? trim($input['address']) : '',
+            'photo'         => !empty($input['photo']) ? trim($input['photo']) : ''
+        );
+
+        $validator = Validator::make($request->all(), [
+            'name' => array('regex:/^[\u4e00-\u9fa5]{2,}$/')
+        ]);
+        // print_r($user_input);
+        // $vali = new Register();
+        // print_r($vali->rules());
+        // $validator = Validator::make($user_input, $vali->rules(), $vali->messages());
+        if ($validator->fails()) 
+        {
+            return response()->json(['error'=>$validator->errors()]);
+        }
+        die;
+        // print_r($user_input);die;
+
         $input['password'] = bcrypt($input['password']);
     	$User = new User();
         $res = $User::create($input);
